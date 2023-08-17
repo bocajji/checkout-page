@@ -7,9 +7,9 @@ interface Props {
 }
 
 export function ProductList({ products }: Props) {
-	return <div className="w-[840px] flex flex-row flex-wrap gap-1">
+	return <div className="w-[840px] flex flex-row flex-wrap gap-2">
 		{products.map(product => {
-			return <ProductCard key={product.id} product={product} />
+			return <ProductCard key={product.code} product={product} />
 		})}
 	</div>
 }

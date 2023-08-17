@@ -16,8 +16,8 @@ export interface Prices {
 }
 
 export interface Product {
-	id: string;
-	title: string;
+	code: string;
+	name: string;
 	imageData: ImageData;
 	supplier: string;
 	dosageForm: string;
@@ -30,7 +30,7 @@ export interface Product {
 // data taken from json. Will remove when data fetch is implemented.
 const data = {
 	"code": "14024547",
-	"name": "Dextro Energy Dextrose Sport Tablets",
+	"name": "Paracetamol",
 	"supplier": "Kyberg Pharma Vertriebs GmbH",
 	"dosageForm": "Tabletten",
 	"rating": 0,
@@ -313,8 +313,8 @@ const data = {
 
 // Mock data to be used for rendering components. Will be removed when data fetch is implemented.
 export const ProductMock: Product = {
-	id:data.code,
-	title: data.name,
+	code:data.code,
+	name: data.name,
 	imageData: {
 		url: 'https://media.docmorris.de/produkte-pzn/14024547/dextro-energy-dextrose-sport-tablets-2-x-14-st-14024547-default-300-1662679355.jpg',
 		alt: 'testing 123'
