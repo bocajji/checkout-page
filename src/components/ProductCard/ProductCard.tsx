@@ -9,7 +9,7 @@ interface Props {
 
 export function ProductCard({ product }: Props) {
 	return (
-		<div className="w-[200px] flex flex-col">
+		<div className="w-[200px] flex flex-col my-2">
 			<p className="w-full align-right text-xs text-secondary text-right">pflichtangaben</p>
 			<ProductImage url={product.imageData.url} alt={product.imageData.alt} />
 			<ProductInfo product={product} />

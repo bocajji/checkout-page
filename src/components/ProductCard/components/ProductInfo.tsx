@@ -1,7 +1,10 @@
+'use client'
+
 import React from 'react';
 import { Product } from '@/types/product';
 import { ProductUtils as utils } from '@/shared/utils/product-utils';
 import { PriceComparison } from '@/components/ProductCard/components/PriceComparison';
+import { ProductButton } from '@/components/ProductCard/components/ProductButton';
 
 interface Props {
 	product: Product;
@@ -18,6 +21,7 @@ export function ProductInfo({ product }: Props) {
 				savings={product.prices.savings.formattedValue}
 			/>
 			<p className="text-sm text-secondary">{product.basePrice}</p>
+			<ProductButton onClick={() => {}} />
 	</div>
 	)
 }

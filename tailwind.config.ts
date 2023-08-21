@@ -17,6 +17,7 @@ const config: Config = {
         '74': '4.625rem',
       },
       colors: {
+        primary: '#00463D',
         secondary: '#706F6F',
         secondaryLight: '#A8A8A8',
       }
