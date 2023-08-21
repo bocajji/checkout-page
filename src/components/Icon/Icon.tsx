@@ -8,7 +8,7 @@ import Trash from '../../../public/trash.svg';
 import { IconType } from '@/components/Icon/icon.types';
 import Image from 'next/image';
 
-const Icons: Record<IconType, any> =  {
+const Icons: Record<IconType, NodeModule> =  {
 	[IconType.ADD]: Add,
 	[IconType.BASKET]: Basket,
 	[IconType.SUBTRACT]: Subtract,
@@ -19,11 +19,10 @@ interface Props {
 	iconType: IconType;
 	size?: number;
 	alt?: string;
-	color?: string;
 }
 
-export function Icon({ iconType, size = 16, alt, color = 'white' }: Props) {
-	const [source, setSource] = useState();
+export function Icon({ iconType, size = 16, alt }: Props) {
+	const [source, setSource] = useState<NodeModule>();
 
 	useEffect(() => {
 		setSource(Icons[iconType]);

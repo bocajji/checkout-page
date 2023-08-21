@@ -16,9 +16,13 @@ const config: Config = {
       spacing: {
         '74': '4.625rem',
       },
+      boxShadow: {
+        standard: '0px 2px 12px 0px #3C3C3B33',
+      },
       colors: {
         primary: '#00463D',
         secondary: '#706F6F',
+        secondaryDark: '#3C3C3B',
         secondaryLight: '#A8A8A8',
       }
     },
