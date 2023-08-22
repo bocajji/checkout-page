@@ -1,9 +1,9 @@
 import { ProductList } from '@/components/ProductList/ProductList';
-import { ProductMock } from '@/types/product';
 import { CheckoutCart } from '@/components/CheckoutCart/CheckoutCart';
+import { fetchProducts } from '@/api';
 
 const getProducts = async () => {
-  return Promise.resolve([ProductMock, ProductMock, ProductMock, ProductMock, ProductMock])
+  return await fetchProducts();
 }
 
 export default async function Home() {
