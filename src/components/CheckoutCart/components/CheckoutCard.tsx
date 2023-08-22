@@ -67,7 +67,7 @@ export function CheckoutCard({ product }: Props) {
 						isLeftDisabled={isLeftDisabled}
 						isRightDisabled={isRightDisabled}
 					/>
-					<p className="text-sm font-semibold">{`${totalProductPrice} €`}</p>
+					<p className="text-sm font-semibold">{utils.formatEuroAmount(totalProductPrice)}</p>
 				</div>
 			</div>
 		</div>
