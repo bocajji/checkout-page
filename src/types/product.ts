@@ -26,6 +26,8 @@ export interface Product {
 	available: boolean;
 	stock: number;
 	prices: Prices
+	isInCheckout: boolean;
+	totalAdded: number;
 }
 // data taken from json. Will remove when data fetch is implemented.
 const data = {
