@@ -1,7 +1,7 @@
 'use client'
 
 import React, { ReactElement, useEffect, useState } from 'react';
-import { ProductCheckoutContext } from '@/Providers/ProductCheckoutContext';
+import { ProductCheckout, ProductCheckoutContext } from '@/Providers/ProductCheckoutContext';
 import { Product } from '@/types/product';
 
 interface Props {
@@ -24,9 +24,7 @@ export function ProductCheckoutProvider({ children, productList }: Props) {
 	const addOneProduct = (code: string) => {
 		const product = findProduct(code);
 		if (product && isAvailable(product)) {
-			console.log('are we here')
-			product.totalAdded = product.totalAdded++
-
+			product.totalAdded = product.totalAdded + 1;
 			if (!product.isInCheckout) {
 				product.isInCheckout = true;
 			}
@@ -37,11 +35,8 @@ export function ProductCheckoutProvider({ children, productList }: Props) {
 	const removeOneProduct = (code: string) => {
 		const product = findProduct(code);
 
-		if (product) {
-			product.totalAdded = product.totalAdded--
-			if (product.totalAdded <=0) {
-				product.isInCheckout = false;
-			}
+		if (product && product.totalAdded > 0) {
+			product.totalAdded = product.totalAdded - 1;
 			setProducts([...products])
 		}
 	}
@@ -56,7 +51,7 @@ export function ProductCheckoutProvider({ children, productList }: Props) {
 		}
 	}
 
-	const value = {
+	const value: ProductCheckout = {
 		products,
 		addOneProduct,
 		removeOneProduct,

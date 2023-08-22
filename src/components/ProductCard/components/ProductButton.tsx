@@ -10,10 +10,11 @@ interface Props {
 }
 
 export function ProductButton({ onClick, isDisabled}: Props) {
+	const buttonColor = isDisabled ? 'bg-secondaryLight' : 'bg-primary';
 	return (
 		<div className="w-full">
 			<button
-				className="p-2 bg-primary rounded-lg flex justify-center items-center float-right"
+				className={`p-2 ${buttonColor} rounded-lg flex justify-center items-center float-right`}
 				disabled={isDisabled}
 				onClick={onClick}
 			>

@@ -3,7 +3,7 @@
 import { createContext } from 'react';
 import { Product } from '@/types/product';
 
-interface ProductCheckout {
+export interface ProductCheckout {
 	products: Product[];
 	checkoutProducts: Product[];
 	addOneProduct: (code: string) => void;
