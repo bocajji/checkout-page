@@ -6,7 +6,7 @@ import { CheckoutBalance } from '@/components/CheckoutCart/components/CheckoutBa
 import { ProductCheckoutContext } from '@/Providers/ProductCheckoutContext';
 
 export function CheckoutCart() {
-	const { checkoutProducts } = useContext(ProductCheckoutContext);
+	const { checkoutProducts, getTotalProductCount, calculateTotalCost } = useContext(ProductCheckoutContext);
 
 	return (
 		<div className="w-[420px] h-[80vh] rounded-lg py-4 px-6 shadow-standard flex flex-col justify-between">
@@ -14,7 +14,7 @@ export function CheckoutCart() {
 				<h3 className="text-lg text-secondaryDark">Zum warenkorb hinzugefügt</h3>
 				<CheckoutList products={checkoutProducts} />
 			</div>
-			<CheckoutBalance totalPrice={0} productCount={0} />
+			<CheckoutBalance totalPrice={calculateTotalCost()} productCount={getTotalProductCount()} />
 		</div>
 	)
 }

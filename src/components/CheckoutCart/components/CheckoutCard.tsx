@@ -14,7 +14,12 @@ interface Props {
 }
 
 export function CheckoutCard({ product }: Props) {
-	const { addOneProduct, removeOneProduct, deleteProduct, isAvailable } = useContext(ProductCheckoutContext);
+	const {
+		addOneProduct,
+		removeOneProduct,
+		deleteProduct,
+		isAvailable,
+	} = useContext(ProductCheckoutContext);
 
 	const onLeftClickHandler = () => {
 		removeOneProduct(product.code);
@@ -30,6 +35,7 @@ export function CheckoutCard({ product }: Props) {
 
 	const isRightDisabled = !isAvailable(product);
 	const isLeftDisabled = product.totalAdded <= 0;
+	const totalProductPrice = product.totalAdded * product.prices.salesPrice.value
 	return (
 		<div className="w-full py-4 flex text-secondaryDark gap-4">
 			<Image
@@ -61,7 +67,7 @@ export function CheckoutCard({ product }: Props) {
 						isLeftDisabled={isLeftDisabled}
 						isRightDisabled={isRightDisabled}
 					/>
-					<p className="text-sm font-semibold">{`${product.prices.salesPrice.formattedValue}`}</p>
+					<p className="text-sm font-semibold">{`${totalProductPrice} €`}</p>
 				</div>
 			</div>
 		</div>

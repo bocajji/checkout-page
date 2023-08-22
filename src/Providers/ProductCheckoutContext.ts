@@ -10,6 +10,8 @@ export interface ProductCheckout {
 	removeOneProduct: (code: string) => void;
 	deleteProduct: (code: string) => void;
 	isAvailable: (product: Product) => boolean;
+	calculateTotalCost: () => number;
+	getTotalProductCount: () => number;
 }
 
 export const ProductCheckoutContext = createContext<ProductCheckout | undefined>(undefined);

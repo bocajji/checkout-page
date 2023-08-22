@@ -51,12 +51,32 @@ export function ProductCheckoutProvider({ children, productList }: Props) {
 		}
 	}
 
+	const calculateTotalCost = (): number => {
+		let total = 0;
+		products.forEach(product => {
+			total = total + (product.prices.salesPrice.value * product.totalAdded);
+		})
+
+		return total;
+	}
+
+	const getTotalProductCount = (): number => {
+		let total = 0;
+		products.forEach(product => {
+			total = total + product.totalAdded;
+		})
+
+		return total
+	}
+
 	const value: ProductCheckout = {
 		products,
 		addOneProduct,
 		removeOneProduct,
 		deleteProduct,
 		isAvailable,
+		calculateTotalCost,
+		getTotalProductCount,
 		checkoutProducts: products.filter(product => product.isInCheckout),
 	}
 

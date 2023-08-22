@@ -14,7 +14,7 @@ export function CheckoutBalance({ totalPrice, productCount }: Props) {
 			<p className="text-xl pb-2 font-semibold text-secondaryDark">Total</p>
 			<div className="flex justify-between">
 				<p className="text-secondaryDark text-sm">{`Summe (${productCountText})`}</p>
-				<p className="text-secondaryDark text-sm">{`${totalPrice} €`}</p>
+				<p className="text-secondaryDark text-sm">{`${totalPrice.toFixed(2)} €`}</p>
 			</div>
 		</div>
 	)
