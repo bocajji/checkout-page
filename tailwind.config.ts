@@ -21,6 +21,7 @@ const config: Config = {
       },
       colors: {
         primary: '#00463D',
+        borderLight: '#D0D0D0',
         secondary: '#706F6F',
         secondaryDark: '#3C3C3B',
         secondaryLight: '#A8A8A8',
