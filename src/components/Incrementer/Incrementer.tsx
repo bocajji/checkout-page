@@ -14,12 +14,15 @@ interface Props {
 
 export function Incrementer({ count, onRightClick, onLeftClick, isRightDisabled, isLeftDisabled }: Props) {
 	return (
-		<div className="w-[106px] border-[1px] border-borderLight rounded-lg flex justify-between px-4 py-2.5">
-			<button onClick={onLeftClick} disabled={isLeftDisabled}>
+		<div
+			data-testid="incrementer"
+			className="w-[106px] border-[1px] border-borderLight rounded-lg flex justify-between px-4 py-2.5"
+		>
+			<button data-testid="incrementer-remove" onClick={onLeftClick} disabled={isLeftDisabled}>
 				<Icon iconType={IconType.SUBTRACT} size={24} />
 			</button>
 			<p className="text-[22px] font-medium text-secondaryDark">{count}</p>
-			<button onClick={onRightClick} disabled={isRightDisabled}>
+			<button data-testid="incrementer-add" onClick={onRightClick} disabled={isRightDisabled}>
 				<Icon iconType={IconType.ADD} size={24} />
 			</button>
 		</div>

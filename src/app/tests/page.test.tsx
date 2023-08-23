@@ -9,18 +9,22 @@ import { CheckoutCart } from '@/components/CheckoutCart/CheckoutCart';
 import { Product } from '@/types/product';
 
 describe('Checkout Page', () => {
-	afterEach(() => {
-		cleanup();
-	})
-	it('smoke test, renders without issue', async () => {
+
+	const renderComponent = (products: Product[]) => {
 		render(
-			<ProductCheckoutProvider productList={[createProductMock()]}>
+			<ProductCheckoutProvider productList={products}>
 				<div className="w-full flex">
 					<ProductList />
 					<CheckoutCart />
 				</div>
 			</ProductCheckoutProvider>
-		);
+		)
+	}
+	afterEach(() => {
+		cleanup();
+	})
+	it('smoke test, renders without issue', async () => {
+		renderComponent([createProductMock()]);
 		const expectedComponent = screen.getByTestId('checkout-balance');
 
 		expect(expectedComponent).toHaveTextContent('Total');
@@ -50,14 +54,7 @@ describe('Checkout Page', () => {
 				}
 			}
 
-			render(
-				<ProductCheckoutProvider productList={getProducts(flow)}>
-					<div className="w-full flex">
-						<ProductList />
-						<CheckoutCart />
-					</div>
-				</ProductCheckoutProvider>
-			)
+			renderComponent(getProducts(flow));
 		}
 
 		it('should NOT allow user to add product when `available` is set to false', () => {
@@ -110,6 +107,77 @@ describe('Checkout Page', () => {
 			expect(checkoutBalance).toHaveTextContent('1 Produkt')
 			// now disabled
 			expect(button[0]).toBeDisabled()
+		})
+	})
+
+	describe('Incrementer logic', () => {
+		enum IncrementerFlow {
+			MAX_PRODUCT_COUNT,
+			MIN_PRODUCT_COUNT,
+			REACHES_MAX_COUNT_FROM_PRODUCT_LIST,
+		}
+		const incrementerSetup = (flow: IncrementerFlow) => {
+			const getProducts = (flow: IncrementerFlow): Product[] => {
+				switch (flow) {
+					case IncrementerFlow.MAX_PRODUCT_COUNT:
+						return [createProductMock({ isInCheckout: true, available: true, stock: 3, totalAdded: 3 })]
+					case IncrementerFlow.MIN_PRODUCT_COUNT:
+						return [createProductMock({ isInCheckout: true, available: true, stock: 3, totalAdded: 0 })]
+					case IncrementerFlow.REACHES_MAX_COUNT_FROM_PRODUCT_LIST:
+						return [createProductMock({ isInCheckout: true, available: true, stock: 3, totalAdded: 2 })]
+				}
+			}
+
+			renderComponent(getProducts(flow));
+		}
+
+		it('should disable ADD button when max reached, but not subtract button.', () => {
+			incrementerSetup(IncrementerFlow.MAX_PRODUCT_COUNT);
+
+			const addButton = screen.getAllByTestId('incrementer-add')[0];
+			const subtractButton = screen.getAllByTestId('incrementer-remove')[0];
+			const incrementer = screen.getAllByTestId('incrementer')[0];
+
+			// before click
+			expect(addButton).toBeDisabled();
+			expect(incrementer).toHaveTextContent('3');
+			fireEvent.click(subtractButton);
+
+			//after click
+			expect(incrementer).toHaveTextContent('2');
+		})
+
+		it('should disable SUBTRACT button when min reached, but not add button.', () => {
+			incrementerSetup(IncrementerFlow.MIN_PRODUCT_COUNT);
+
+			const addButton = screen.getAllByTestId('incrementer-add')[0];
+			const subtractButton = screen.getAllByTestId('incrementer-remove')[0];
+			const incrementer = screen.getAllByTestId('incrementer')[0];
+
+			// before click
+			expect(subtractButton).toBeDisabled();
+			expect(incrementer).toHaveTextContent('0');
+			fireEvent.click(addButton);
+
+			//after click
+			expect(incrementer).toHaveTextContent('1');
+		})
+
+		it('should disable BOTH product and add button when max is reached, even when product button clicked.', () => {
+			incrementerSetup(IncrementerFlow.REACHES_MAX_COUNT_FROM_PRODUCT_LIST);
+
+			const addButton = screen.getAllByTestId('incrementer-add')[0];
+			const productButton = screen.getAllByTestId('product-button')[0];
+			const incrementer = screen.getAllByTestId('incrementer')[0];
+
+			// before click
+			expect(incrementer).toHaveTextContent('2');
+			fireEvent.click(productButton);
+
+			//after click
+			expect(incrementer).toHaveTextContent('3');
+			expect(addButton).toBeDisabled();
+			expect(productButton).toBeDisabled();
 		})
 	})
 })
