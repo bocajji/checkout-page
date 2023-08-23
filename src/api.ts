@@ -17,7 +17,7 @@ const transformProductDto = (data: any): Product => {
 		// only saving image variant that is to be used.
 		imageData: {
 			url: data.images[0].variants[300].formats.jpg.resolutions['1x'].url,
-			alt: `Image of the product ${data.name} from ${data.supplier},`
+			alt: `Image of ${data.name} from ${data.supplier},`
 		},
 		isInCheckout: false,
 		totalAdded: 0,
