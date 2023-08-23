@@ -8,7 +8,7 @@ interface Props {
 
 export function CheckoutList({ products }: Props) {
 	return (
-		<div className="px-2 py-1 w-full">
+		<div className="px-2 py-1 w-full min-w-[300px]">
 			{products.map(product => <CheckoutCard key={product.code} product={product} />)}
 		</div>
 	)

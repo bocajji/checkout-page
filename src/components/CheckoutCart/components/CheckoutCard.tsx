@@ -38,13 +38,18 @@ export function CheckoutCard({ product }: Props) {
 	const totalProductPrice = product.totalAdded * product.prices.salesPrice.value
 	return (
 		<div className="w-full py-4 flex text-secondaryDark gap-4">
-			<Image
-				src={product.imageData.url}
-				alt={product.imageData.alt}
-				width={110}
-				height={110}
-				className="flex-1"
-			/>
+			<div className="flex-1 relative min-w-[110px] max-h-[110px]">
+				<Image
+					src={product.imageData.url}
+					alt={product.imageData.alt}
+					fill
+					sizes="max-height: 110px"
+					style={{
+						objectFit: 'contain',
+						flex: 1,
+					}}
+				/>
+			</div>
 			<div className="w-full flex-2">
 				<div className="flex flex-row items-center justify-between pb-2">
 					<p className="text-sm font-semibold max-w-[210px] line-clamp-2">{product.name}</p>
