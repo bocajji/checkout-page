@@ -7,11 +7,11 @@ interface Props {
 }
 
 export function CheckoutBalance({ totalPrice, productCount }: Props) {
-	const productCountText = totalPrice === 1
+	const productCountText = productCount === 1
 		? '1 Produkt'
 		: `${productCount} Produkte`;
 	return (
-		<div className="py-1 w-full">
+		<div className="py-1 w-full" data-testid="checkout-balance">
 			<p className="text-xl pb-2 font-semibold text-secondaryDark">Total</p>
 			<div className="flex justify-between">
 				<p className="text-secondaryDark text-sm">{`Summe (${productCountText})`}</p>
