@@ -53,7 +53,7 @@ export function CheckoutCard({ product }: Props) {
 			<div className="w-full flex-2">
 				<div className="flex flex-row items-center justify-between pb-2">
 					<p className="text-sm font-semibold max-w-[210px] line-clamp-2">{product.name}</p>
-					<button onClick={onDeleteHandler}>
+					<button data-testid="delete-button" onClick={onDeleteHandler}>
 						<Icon iconType={IconType.TRASH} size={20} />
 					</button>
 				</div>

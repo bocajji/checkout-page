@@ -2,7 +2,7 @@ import Home from '@/app/page';
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen, cleanup } from "@testing-library/react";
 import { describe, expect, it, jest, beforeEach, afterEach } from '@jest/globals';
-import { createProductMock } from '@/app/tests/mocks/productMock';
+import { createPricesMock, createProductMock } from '@/app/tests/mocks/productMock';
 import { ProductCheckoutProvider } from '@/Providers/ProductCheckoutProvider';
 import { ProductList } from '@/components/ProductList/ProductList';
 import { CheckoutCart } from '@/components/CheckoutCart/CheckoutCart';
@@ -178,6 +178,80 @@ describe('Checkout Page', () => {
 			expect(incrementer).toHaveTextContent('3');
 			expect(addButton).toBeDisabled();
 			expect(productButton).toBeDisabled();
+		})
+	})
+
+	describe('total and balance logic', () => {
+		enum TotalFlow {
+			MULTIPLES_OF_ONE_PRODUCT,
+			DELETE_WITH_MULTIPLES_OF_MULTIPLE_PRODUCT
+
+		}
+		const productOnePrice = 2.04;
+		const productTwoPrice = 3.45;
+		const totalFirstProduct = 2;
+		const totalSecondProduct = 3;
+
+		const totalSetup = (flow: TotalFlow) => {
+			const getProducts = (flow: TotalFlow): Product[] => {
+				switch (flow) {
+					case TotalFlow.MULTIPLES_OF_ONE_PRODUCT:
+						return [createProductMock({ stock: 5, totalAdded: totalFirstProduct, isInCheckout: true })];
+					case TotalFlow.DELETE_WITH_MULTIPLES_OF_MULTIPLE_PRODUCT:
+						return [
+							createProductMock({ stock: 5, totalAdded: totalFirstProduct, isInCheckout: true }),
+							createProductMock({
+								stock: 5,
+								isInCheckout: true,
+								totalAdded: totalSecondProduct,
+								prices: createPricesMock({
+									salesPrice: {
+										value: productTwoPrice,
+										formattedValue: '3.45 €',
+									}
+								})
+							})
+						];
+				}
+			}
+
+			renderComponent(getProducts(flow));
+		}
+
+		it('should display correct total and cost of two of the same product.', () => {
+			totalSetup(TotalFlow.MULTIPLES_OF_ONE_PRODUCT);
+
+			const checkoutList = screen.getByTestId('checkout-list');
+			const checkoutBalance = screen.getByTestId('checkout-balance');
+			const totalPrice = totalFirstProduct * productOnePrice;
+
+			expect(checkoutList).toHaveTextContent(`${totalPrice.toFixed(2)} €`);
+			expect(checkoutBalance).toHaveTextContent(`${totalPrice.toFixed(2)} €`);
+			expect(checkoutBalance).toHaveTextContent('2 Produkte');
+		})
+
+		it('should display correct total and cost of multiple products, even after deleting product.', () => {
+			totalSetup(TotalFlow.DELETE_WITH_MULTIPLES_OF_MULTIPLE_PRODUCT);
+
+			const checkoutList = screen.getByTestId('checkout-list');
+			const checkoutBalance = screen.getByTestId('checkout-balance');
+			const deleteButton = screen.getAllByTestId('delete-button')[0];
+			const euroTotalFirstProduct = totalFirstProduct * productOnePrice;
+			const euroTotalSecondProduct = totalSecondProduct * productTwoPrice;
+			const totalPrice = euroTotalFirstProduct + euroTotalSecondProduct;
+
+			// before deleting first product
+			expect(checkoutList).toHaveTextContent(`${euroTotalFirstProduct.toFixed(2)} €`);
+			expect(checkoutList).toHaveTextContent(`${euroTotalSecondProduct.toFixed(2)} €`);
+			expect(checkoutBalance).toHaveTextContent(`${totalPrice.toFixed(2)} €`);
+			expect(checkoutBalance).toHaveTextContent('5 Produkte');
+
+			fireEvent.click(deleteButton);
+
+			// after deleting product
+			expect(checkoutList).toHaveTextContent(`${euroTotalSecondProduct.toFixed(2)} €`);
+			expect(checkoutBalance).toHaveTextContent(`${euroTotalSecondProduct.toFixed(2)} €`);
+			expect(checkoutBalance).toHaveTextContent('3 Produkte');
 		})
 	})
 })

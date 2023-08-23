@@ -1,5 +1,5 @@
 // Mock data to be used for rendering components. Will be removed when data fetch is implemented.
-import { Product } from '@/types/product';
+import { Prices, Product } from '@/types/product';
 
 const productMock: Product = {
 	code: '14024547',
@@ -33,7 +33,28 @@ const productMock: Product = {
 	},
 }
 
-export const createProductMock = (override: Partial<Product> = {}) => ({
+export const createProductMock = (override: Partial<Product> = {}): Product => ({
 	...productMock,
 	...override
+})
+
+const pricesMock = {
+	salesPrice: {
+		value: 2.04,
+		formattedValue: '2,04 €'
+	},
+	recommendedRetailPrice: {
+		value: 2.4,
+		formattedValue: '2,40 €'
+	},
+	savings: {
+		value: 0.36,
+		formattedValue: '0,36 €'
+	},
+	savingsPercentageFormatted: '15%',
+}
+
+export const createPricesMock = (override: Partial<Prices> = {}): Prices => ({
+	...pricesMock,
+	...override,
 })
