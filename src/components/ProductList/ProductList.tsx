@@ -9,7 +9,7 @@ export function ProductList() {
 	const { products } = useContext(ProductCheckoutContext);
 	return <div className="w-[840px] h-[80vh] overflow-y-scroll flex flex-row flex-wrap gap-2 flex-grow-1 hide-scrollbar">
 		{products.map(product => {
-			return <ProductCard key={product.code} product={product} />
+			return <ProductCard key={`product-list-${product.code}`} product={product} />
 		})}
 	</div>
 }
