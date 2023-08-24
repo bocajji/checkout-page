@@ -40,7 +40,7 @@ const MobileCTA = ({ text, onClick }: MobileProps) => {
 	return (
 		<div onDrag={onClick}>
 			<div className="flex justify-center items-center">
-				<button onClick={onClick} className="w-[60px] h-20px">
+				<button onClick={onClick} className="w-[60px] h-[20px]">
 					<Line pixelHeight={4} />
 				</button>
 			</div>
