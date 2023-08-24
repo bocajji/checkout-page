@@ -19,14 +19,17 @@ export function Draggable({ onClick, children, displayContent }: Props) {
 	}, [displayContent])
 
 	return (
-		<div
-			className={`w-full ${overFlow} transition-[height] ease-in-out duration-500 max-h-[90vh]`}
-			onDrag={onClick}
-		>
-			<div className="flex justify-center items-center">
-				<button onClick={onClick} className="w-[60px] h-[20px]">
-					<Line pixelHeight={4} />
-				</button>
+		<div>
+			<div
+				className={`w-full ${overFlow} transition-[height] ease-in-out duration-500 max-h-[90vh]`}
+				onDrag={onClick}
+				onClick={onClick}
+			>
+				<div className="flex justify-center items-center">
+					<button onClick={onClick} className="w-[60px] h-[20px]">
+						<Line pixelHeight={4} />
+					</button>
+				</div>
 			</div>
 			<div className="w-full">
 				{displayContent ? children : null}
