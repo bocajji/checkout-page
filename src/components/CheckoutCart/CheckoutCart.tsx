@@ -11,7 +11,7 @@ export function CheckoutCart() {
 	return (
 		<div
 			data-testid="checkout-cart"
-			className="w-[420px] h-[80vh] rounded-lg py-4 px-6 shadow-standard flex flex-col justify-between"
+			className="large:w-[420px] large:h-[80vh] rounded-lg py-4 px-6 shadow-standard flex flex-col justify-between"
 		>
 			<div className="overflow-y-scroll flex-grow-1 hide-scrollbar">
 				<h3 className="text-lg text-secondaryDark">Zum warenkorb hinzugefügt</h3>

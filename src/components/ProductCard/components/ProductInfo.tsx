@@ -6,6 +6,7 @@ import { ProductUtils as utils } from '@/shared/utils/product-utils';
 import { PriceComparison } from '@/components/ProductCard/components/PriceComparison';
 import { ProductButton } from '@/components/ProductCard/components/ProductButton';
 import { ProductCheckoutContext } from '@/Providers/ProductCheckoutContext';
+import { useIsMobile } from '@/shared/hooks/useIsMobile';
 
 interface Props {
 	product: Product;
@@ -13,6 +14,7 @@ interface Props {
 
 export function ProductInfo({ product }: Props) {
 	const { addOneProduct, isAvailable } = useContext(ProductCheckoutContext);
+	const isMobile = useIsMobile();
 
 	const onClickHandler = () => {
 		addOneProduct(product.code)
@@ -27,7 +29,7 @@ export function ProductInfo({ product }: Props) {
 				savings={product.prices.savings.formattedValue}
 			/>
 			<p className="text-sm text-secondary">{product.basePrice}</p>
-			<ProductButton onClick={onClickHandler} isDisabled={!isAvailable(product)} />
+			{!isMobile && <ProductButton onClick={onClickHandler} isDisabled={!isAvailable(product)}/>}
 	</div>
 	)
 }

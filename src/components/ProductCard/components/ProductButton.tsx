@@ -15,7 +15,7 @@ export function ProductButton({ onClick, isDisabled}: Props) {
 		<div className="w-full">
 			<button
 				data-testid="product-button"
-				className={`p-2 ${buttonColor} rounded-lg flex justify-center items-center float-right`}
+				className={`p-2 ${buttonColor} rounded-lg flex justify-center items-center large:float-right`}
 				disabled={isDisabled}
 				onClick={onClick}
 			>

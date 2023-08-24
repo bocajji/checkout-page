@@ -7,7 +7,7 @@ export default async function Home() {
   const products = await fetchProducts();
   return (
     <ProductCheckoutProvider productList={products}>
-      <div className="w-full flex">
+      <div className="w-full flex flex-col large:flex-row">
         <ProductList />
         <CheckoutCart />
       </div>
