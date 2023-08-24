@@ -39,11 +39,6 @@ interface MobileProps {
 const MobileCTA = ({ text, onClick }: MobileProps) => {
 	return (
 		<div onDrag={onClick}>
-			<div className="flex justify-center items-center">
-				<button onClick={onClick} className="w-[60px] h-[20px]">
-					<Line pixelHeight={4} />
-				</button>
-			</div>
 			<div className="flex justify-between items-center">
 				<p className="text-sm">{text}</p>
 				<button onClick={onClick} className="bg-primary text-center rounded-lg">

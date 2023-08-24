@@ -5,6 +5,7 @@ import { CheckoutList } from '@/components/CheckoutCart/components/CheckoutList'
 import { CheckoutBalance } from '@/components/CheckoutCart/components/CheckoutBalance';
 import { ProductCheckoutContext } from '@/Providers/ProductCheckoutContext';
 import { useIsMobile } from '@/shared/hooks/useIsMobile';
+import { Draggable } from '@/components/Draggable/Draggable';
 
 export function CheckoutCart() {
 	const { checkoutProducts, getTotalProductCount, calculateTotalCost } = useContext(ProductCheckoutContext);
@@ -14,8 +15,6 @@ export function CheckoutCart() {
 	const onClickHandler = () => {
 		setShouldDisplayCart(!shouldDisplayCart);
 	}
-	// Always on, if not mobile layout.
-	const displayCheckout = isMobile ? shouldDisplayCart : true;
 	const mobileCSS = 'fixed bottom-[0] bg-white';
 	return (
 		<div
@@ -23,11 +22,12 @@ export function CheckoutCart() {
 			className={`${isMobile ? mobileCSS : ''}
 			w-full large:w-[420px] large:h-[80vh] rounded-lg py-4 px-6 shadow-standard flex flex-col justify-between`}
 		>
-			{displayCheckout && (
-				<div className="overflow-y-scroll flex-grow-1 hide-scrollbar">
-					<h3 className="text-lg text-secondaryDark">Zum warenkorb hinzugefügt</h3>
-					<CheckoutList products={checkoutProducts}/>
-				</div>
+			{isMobile ? (
+				<Draggable onClick={onClickHandler} displayContent={shouldDisplayCart}>
+            <CheckoutList products={checkoutProducts}/>
+				</Draggable>
+			) : (
+				<CheckoutList products={checkoutProducts} />
 			)}
 			<CheckoutBalance
 				totalPrice={calculateTotalCost()}
